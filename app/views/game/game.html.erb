@@ -1,0 +1,98 @@
+<script>
+  var c_img;
+  var n_img;
+  var nuke;
+  var nucleotides;
+  var aminoAcids;
+  var glucose;
+  var atp;
+  var mito;
+  var er;
+  var m_img;
+  var e_img;
+  var notifier;
+  var m_button;
+  var membrane_hp;
+  var invaderVirae;
+  var ivTask;
+  var taskManager;
+  var tasks;
+  var tasksLength;
+  var noTask;
+  var dice;
+  var dicer;
+  var golgiBody;
+
+  function preload(){
+    n_img = loadImage('assets/nucleusiguess.png');
+    m_img = loadImage('assets/mitochondrion.png');
+    e_img = loadImage('assets/er.png');
+    c_img = loadImage('assets/membrane.png');
+    g_img = loadImage('assets/golgibody.png')
+  }
+
+  function setup(){
+    createCanvas(1000,570);
+    atp = new Resource('ATP',300,125,125,0,0,100);
+    nucleotides = new Resource('NUCLEOTIDES',100,255,0,0,250, 100);
+    aminoAcids = new Resource('AMINO-ACIDS',200,0,255,0,250, 100);
+    glucose = new Resource('GLUCOSE',0,0,0,255,250);
+    mito = new Mitochondrion(m_img,width/3,height/4,((m_img.width)/2),[m_button]);
+    er = new Organellee('Endoplasmic Reticulum',e_img,width/2+n_img.width-10,height/2-20);
+    notifier = new Notifier();
+    invaderVirae = new InvaderVirae();
+    tasks = [invaderVirae];
+    tasksLength = tasks.length;
+    for(var i=0;i<tasksLength*2;i++){
+      noTask = new NoTask();
+      tasks.push(noTask);
+    }
+    taskManager = new TaskManager(tasks);
+    dice = function(){
+      invaderVirae.destroy(1);
+    };
+    dicer = new Protein(10,10,dice);
+    nuke = new Nucleus(n_img,width/2,height/2,[dicer]);
+    golgiBody = new GolgiBody(g_img,width/2,height/4)
+  }
+
+  function draw(){
+    background(130);
+    image(c_img,250,75);
+    nuke.display();
+    atp.display();
+    glucose.display();
+    aminoAcids.display();
+    nucleotides.display();
+    mito.display();
+    er.display();
+    notifier.display();
+    golgiBody.display();
+    taskManager.play();
+  }
+
+  function mouseMoved() {
+    mito.mouseMoved();
+    golgiBody.mouseMoved();
+    nuke.mouseMoved();
+    er.mouseMoved();
+  }
+
+  function mousePressed(){
+    mito.mousePressed();
+    if(mito.menuOpen()) {
+      nuke.closeMenu();
+      golgiBody.closeMenu();
+    }
+    nuke.mousePressed();
+    if(nuke.menuOpen()) {
+      mito.closeMenu();
+      golgiBody.closeMenu();
+    }
+    golgiBody.mousePressed();
+    if(golgiBody.menuOpen()) {
+      mito.closeMenu();
+      nuke.closeMenu();
+    }
+  }
+</script>
