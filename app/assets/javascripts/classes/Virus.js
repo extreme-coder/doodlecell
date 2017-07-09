@@ -20,7 +20,7 @@ function InvaderVirae(){
         fill(0);
         textSize(12);
         text(this.amount+'/'+1000,width-100,50);
-        text('Influenza',width-100,20,50,50);
+        text('Virus',width-100,20,50,50);
 
     };
     this.destroy = function(amount){
@@ -49,7 +49,7 @@ function InvaderVirae(){
     };
     
     this.hasFailed = function(){
-        if (this.amount >= 1000) {
+        if (this.amount >= 100) {
             //this.amount = 1;
             return true;
         } else {

@@ -58,17 +58,39 @@
 
   function draw(){
     background(130);
-    image(c_img,250,75);
-    nuke.display();
-    atp.display();
-    glucose.display();
-    aminoAcids.display();
-    nucleotides.display();
-    mito.display();
-    er.display();
-    notifier.display();
-    golgiBody.display();
-    taskManager.play();
+
+    if (this.gameOver) {
+      stroke(0);
+      fill(128);
+      rect(0,0,width,height);
+      stroke(255,255,0);
+      fill(255,0,0);
+      textSize(150);
+      text('GAME OVER',0,0,width,height);
+      textSize(75);
+      text(Math.round(taskManager.timeAlive/60)+' seconds alive',0,300);
+      text(this.bestScore + ' seconds best', 0, 450);
+    } else {
+      image(c_img,250,75);
+      nuke.display();
+      atp.display();
+      glucose.display();
+      aminoAcids.display();
+      nucleotides.display();
+      mito.display();
+      er.display();
+      notifier.display();
+      golgiBody.display();
+      taskManager.play();
+      if (taskManager.isTaskFailed()) {
+        this.gameOver = true;
+        httpPost('/score','json',{score: Math.round(taskManager.timeAlive/60), authenticity_token: "<%= form_authenticity_token %>"}, function(res) {
+          this.bestScore = res;
+        });
+      }
+    }
+
+
   }
 
   function mouseMoved() {
