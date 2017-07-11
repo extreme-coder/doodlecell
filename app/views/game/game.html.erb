@@ -53,7 +53,8 @@
     };
     dicer = new Protein(10,10,dice);
     nuke = new Nucleus(n_img,width/2,height/2,[dicer]);
-    golgiBody = new GolgiBody(g_img,width/2,height/4)
+    golgiBody = new GolgiBody(g_img,width/2,height/4);
+    this.gameOverMessage = '';
   }
 
   function draw(){
@@ -69,7 +70,7 @@
       text('GAME OVER',0,0,width,height);
       textSize(75);
       text(Math.round(taskManager.timeAlive/60)+' seconds alive',0,300);
-      text(this.bestScore + ' seconds best', 0, 450);
+      text(this.gameOverMessage , 0, 450);
     } else {
       image(c_img,250,75);
       nuke.display();
@@ -85,7 +86,7 @@
       if (taskManager.isTaskFailed()) {
         this.gameOver = true;
         httpPost('/score','json',{score: Math.round(taskManager.timeAlive/60), authenticity_token: "<%= form_authenticity_token %>"}, function(res) {
-          this.bestScore = res;
+          this.gameOverMessage = res.message;
         });
       }
     }
