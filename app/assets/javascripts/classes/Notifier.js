@@ -5,7 +5,8 @@ function Notifier(){
     this.messages = [];
 
     this.addMessage = function(text){
-        this.messages.unshift(text)
+        this.messages.unshift(text);
+        notifySound.play();
     };
 
     this.display = function() {

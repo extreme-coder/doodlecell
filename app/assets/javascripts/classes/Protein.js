@@ -2,7 +2,7 @@
  * Created by aryan on 2017-05-28.
  */
 
-function Protein(a_cost, n_cost, func){
+function Protein(a_cost, n_cost, func, name, xpos, ypos){
     this.a_cost = a_cost;
     this.n_cost = n_cost;
     this.func = func;
@@ -29,5 +29,14 @@ function Protein(a_cost, n_cost, func){
                 this.func(); //this.func stores a function, this line of code calls it
             }
         }
-    }
+    };
+    this.getxpos = function(){
+       return xpos 
+    };
+    this.getypos = function(){
+        return ypos
+    };
+    this.getName = function(){
+        return name
+    };
 }

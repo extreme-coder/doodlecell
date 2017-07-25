@@ -15,6 +15,7 @@
   var membrane_hp;
   var invaderVirae;
   var ivTask;
+  var radiation;
   var taskManager;
   var tasks;
   var tasksLength;
@@ -22,17 +23,28 @@
   var dice;
   var dicer;
   var golgiBody;
+  var gameOverSound;
+  var notifySound;
+  var virusSound;
+  var geneRegulator;
+  var geneRegulate;
 
   function preload(){
     n_img = loadImage('assets/nucleusiguess.png');
     m_img = loadImage('assets/mitochondrion.png');
     e_img = loadImage('assets/er.png');
     c_img = loadImage('assets/membrane.png');
-    g_img = loadImage('assets/golgibody.png')
+    g_img = loadImage('assets/golgibody.png');
+    gameOverSound = loadSound('assets/gameOverSound.mp3');
+    notifySound = loadSound('assets/Notify.mp3');
+    virusSound = loadSound('assets/virus_attack.mp3');
   }
 
   function setup(){
     createCanvas(1000,570);
+    gameOverSound.setVolume(1);
+    notifySound.setVolume(1);
+    virusSound.setVolume(1);
     atp = new Resource('ATP',300,125,125,0,0,100);
     nucleotides = new Resource('NUCLEOTIDES',100,255,0,0,250, 100);
     aminoAcids = new Resource('AMINO-ACIDS',200,0,255,0,250, 100);
@@ -41,7 +53,8 @@
     er = new Organellee('Endoplasmic Reticulum',e_img,width/2+n_img.width-10,height/2-20);
     notifier = new Notifier();
     invaderVirae = new InvaderVirae();
-    tasks = [invaderVirae];
+    radiation = new Radiation();
+    tasks = [radiation];
     tasksLength = tasks.length;
     for(var i=0;i<tasksLength*2;i++){
       noTask = new NoTask();
@@ -51,8 +64,12 @@
     dice = function(){
       invaderVirae.destroy(1);
     };
-    dicer = new Protein(10,10,dice);
-    nuke = new Nucleus(n_img,width/2,height/2,[dicer]);
+    geneRegulate = function(){
+      radiation.fix()
+    };
+    dicer = new Protein(10,10,dice,'Create Dicer Enzymes',width-290,height-70);
+    geneRegulator = new Protein(60,60,geneRegulate,'Create Gene Regulators',width-140,height-70);
+    nuke = new Nucleus(n_img,width/2,height/2,[dicer,geneRegulator]);
     golgiBody = new GolgiBody(g_img,width/2,height/4);
     this.gameOverMessage = '';
   }
@@ -85,6 +102,7 @@
       taskManager.play();
       if (taskManager.isTaskFailed()) {
         this.gameOver = true;
+        gameOverSound.play();
         httpPost('/score','json',{score: Math.round(taskManager.timeAlive/60), authenticity_token: "<%= form_authenticity_token %>"}, function(res) {
           this.gameOverMessage = res.message;
         });

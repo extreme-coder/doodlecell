@@ -8,6 +8,7 @@ function InvaderVirae(){
     this.counter = 0;
     this.start = function() {
         notifier.addMessage("Alert! Incoming virus attack!");
+        virusSound.play();
     };
 
     this.multiply = function(){
@@ -19,9 +20,9 @@ function InvaderVirae(){
         rect(width-110,10,100,50);
         fill(0);
         textSize(12);
-        text(this.amount+'/'+1000,width-100,50);
+        text(this.amount+'/'+100,width-100,50);
         text('Virus',width-100,20,50,50);
-
+        virusSound.play();
     };
     this.destroy = function(amount){
         this.amount -= amount
