@@ -1,17 +1,20 @@
 /**
- * Created by aryan on 2017-05-28.
+ * Created by aryan on 2017-08-31.
  */
 
 function ATP(){
-    this.quantity = 0;
-    
-    this.capacity = 500;
-    
-    this.display = function(){
-        text(this.quantity,0,0);
+    Resource.call(this,'ATP',300,125,125,0,150,100);
+    this.counter = 0;
+    this.afterRunningLow = function () {
+        tutorial.getGlucoseBurn();
     };
 
-    this.produce = function(glucose){
-        this.quantity += (glucose/3);
+    this.ticker = function () {
+        this.counter ++;
+        if ( this.counter == 60 && this.quantity > 0) {
+            this.quantity --;
+            this.counter = 0;
+        }
     };
+
 }

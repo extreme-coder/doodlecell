@@ -11,8 +11,8 @@ function Protein(a_cost, n_cost, func, name, xpos, ypos){
         var prevNucleoAmount = nucleotides.showQuantity();
         var prevAtpAmount = atp.showQuantity();
         
-        aminoAcids.spend(this.a_cost*5);
-        nucleotides.spend(this.n_cost*5);
+        aminoAcids.spend(this.a_cost);
+        nucleotides.spend(this.n_cost);
         atp.spend(50);
         
         var nucleoAmount = nucleotides.showQuantity();

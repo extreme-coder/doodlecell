@@ -3,17 +3,18 @@
  */
 function Notifier(){
     this.messages = [];
-
     this.addMessage = function(text){
         this.messages.unshift(text);
-        notifySound.play();
+        if (notifySound.isLoaded()){
+            notifySound.play();
+        }
     };
 
     this.display = function() {
         fill(100,100,100);
-        rect(5,80,240,300);
+        rect(5,80,240,325);
         text1 = '';
-        for (i=0;i<this.messages.slice(0,5).length;i++) {
+        for (i=0;i<this.messages.slice(0,8).length;i++) {
             text1 = text1 + this.messages[i] + '\n\n';
         }
 

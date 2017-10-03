@@ -10,7 +10,7 @@ function Mitochondrion(img_path, x, y){
         glucose.spend(20);
         var sugarAmount = glucose.showQuantity();
         if (prevSugarAmount != sugarAmount) {
-            atp.collect(40);
+            atp.collect(100);
         }
     };
     this.buttons.push(new Button(this, 'burn', width/2,height-70,width/5,60,'Burn Glucose',0,255,0,30));

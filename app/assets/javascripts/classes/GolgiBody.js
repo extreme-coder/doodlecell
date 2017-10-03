@@ -10,6 +10,48 @@ function GolgiBody(img_path,x,y){
     this.sugarReady = false;
     this.acidReady = false;
     this.nucleoReady = false;
+    this.ticker = function() {
+        this.sugarCounter++;
+        this.acidCounter++;
+        this.nucleoCounter++;
+        if (this.sugarCounter > 600) {
+            this.buttons[0].setAddText("Ready");
+            if (!this.sugarReady) {
+                this.sugarReady = true;
+                notifier.addMessage("Glucose is ready to collect");
+                tutorial.getResourceCollection();
+            }
+
+        } else {
+            this.buttons[0].setAddText("Wait for " + (Math.floor(10-this.sugarCounter/60)+1) + 's');
+            this.sugarReady = false;
+        }
+
+
+
+        if (this.acidCounter > 900) {
+            this.buttons[1].setAddText("Ready");
+            if (!this.acidReady) {
+                this.acidReady = true;
+                notifier.addMessage("Amino acids are ready to collect");
+            }
+
+        } else {
+            this.buttons[1].setAddText("Wait for " + (Math.floor(15-this.acidCounter/60)+1) + 's');
+            this.acidReady = false;
+        }
+        if (this.nucleoCounter > 900) {
+            this.buttons[2].setAddText("Ready");
+            if (!this.nucleoReady) {
+                this.nucleoReady = true;
+                notifier.addMessage("Nucleotides are ready to collect");
+            }
+
+        } else {
+            this.buttons[2].setAddText("Wait for " + (Math.floor(15-this.nucleoCounter/60)+1) + 's');
+            this.nucleoReady = false;
+        }
+    };
 
     this.display = function() {
         this.counter ++;
@@ -33,45 +75,7 @@ function GolgiBody(img_path,x,y){
                 this.buttons[i].display()
             }
         }
-        this.sugarCounter++;
-        this.acidCounter++;
-        this.nucleoCounter++;
-        if (this.sugarCounter > 300) {
-            this.buttons[0].setAddText("Ready");
-            if (!this.sugarReady) {
-                this.sugarReady = true;
-                notifier.addMessage("Glucose is ready to collect");
-            }
 
-        } else {
-            this.buttons[0].setAddText("Wait for " + (Math.floor(5-this.sugarCounter/60)+1) + 's');
-            this.sugarReady = false;
-        }
-
-
-
-        if (this.acidCounter > 300) {
-            this.buttons[1].setAddText("Ready");
-            if (!this.acidReady) {
-                this.acidReady = true;
-                notifier.addMessage("Amino acids are ready to collect");
-            }
-
-        } else {
-            this.buttons[1].setAddText("Wait for " + (Math.floor(5-this.acidCounter/60)+1) + 's');
-            this.acidReady = false;
-        }
-        if (this.nucleoCounter > 300) {
-            this.buttons[2].setAddText("Ready");
-            if (!this.nucleoReady) {
-                this.nucleoReady = true;
-                notifier.addMessage("Nucleotides are ready to collect");
-            }
-
-        } else {
-            this.buttons[2].setAddText("Wait for " + (Math.floor(5-this.nucleoCounter/60)+1) + 's');
-            this.nucleoReady = false;
-        }
 
         if(this.isMouseHovering) {
             stroke(0);
@@ -82,23 +86,23 @@ function GolgiBody(img_path,x,y){
     };
 
     this.getGlucose = function(){
-        if (this.sugarCounter >= 300) {
+        if (this.sugarCounter >= 600) {
             this.sugarCounter = 0;
-            glucose.collect(20);
+            glucose.collect(40);
         }
     };
     
     this.getAminoAcids = function(){
-        if (this.acidCounter >= 300) {
+        if (this.acidCounter >= 900) {
             this.acidCounter = 0;
-            aminoAcids.collect(20);
+            aminoAcids.collect(60);
         }
     };
     
     this.getNucleotides = function(){
-        if (this.nucleoCounter >= 300){
+        if (this.nucleoCounter >= 900){
             this.nucleoCounter = 0;
-            nucleotides.collect(20);
+            nucleotides.collect(60);
         }
     };
 

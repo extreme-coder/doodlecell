@@ -79,4 +79,10 @@ function Organellee(name, img, x, y){
             text(this.name,this.x,this.y);
         }
     };
+    this.getCenterX = function(){
+        return this.x+(this.width/2)
+    };
+    this.getCenterY = function(){
+        return this.y+(this.height/2)
+    }
 }

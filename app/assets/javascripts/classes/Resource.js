@@ -1,14 +1,15 @@
-/**
- * Created by aryan on 2017-05-28.
- */
+
 
 function Resource(name, num, r, g, b, startValue, minValue){
+    this.name = name;
     this.num = num + 10;
     this.quantity = startValue;
     this.capacity = 500;
     this.minValue = minValue;
     this.runningLow = false;
-
+    this.r = r;
+    this.g = g;
+    this.b = b;
     
     this.showQuantity = function(){
         return this.quantity
@@ -42,8 +43,19 @@ function Resource(name, num, r, g, b, startValue, minValue){
         }
 
     };
+    
+    this.afterRunningLow = function () {
+       
+    };
+    
+    this.ticker = function () {
+        
+    };
+    
+    
 
     this.display = function(){
+
         stroke(0);
         fill(r,g,b);
         
@@ -51,13 +63,14 @@ function Resource(name, num, r, g, b, startValue, minValue){
         fill(0);
         textSize(12);
         text(this.quantity+'/'+this.capacity,this.num+5,55);
-        text(name,this.num+5,20,50,50);
+        text(this.name,this.num+5,20,50,50);
 
         if (this.hasQuantityGoneLow()) {
-            notifier.addMessage(name + ' is running low');
+            notifier.addMessage(this.name + ' is running low');
+            this.afterRunningLow();
         }
         if (this.hasQuantityRecovered()) {
-            notifier.addMessage(name + ' has recovered');
+            notifier.addMessage(this.name + ' has recovered');
         }
         
     };
@@ -66,7 +79,8 @@ function Resource(name, num, r, g, b, startValue, minValue){
         if (this.quantity+amount<this.capacity){
             this.quantity += amount;
         } else {
-            notifier.addMessage('Not enough capacity for ' + name );
+            notifier.addMessage('Not enough capacity for ' + this.name );
+            this.quantity = this.capacity;
         }
     };
     
@@ -74,7 +88,7 @@ function Resource(name, num, r, g, b, startValue, minValue){
         if(this.quantity-amount>=0){
             this.quantity -= amount;
         } else {
-            notifier.addMessage('Not enough '+name);
+            notifier.addMessage('Not enough '+ this.name);
         }
     }
 }

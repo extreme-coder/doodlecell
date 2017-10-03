@@ -10,6 +10,9 @@ function Task(){
     this.play = function(){
         this.isPlaying = true
     };
+    this.display = function(){
+
+    };
 
     this.playing = function(){
         return this.isPlaying

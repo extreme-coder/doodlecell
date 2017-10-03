@@ -26,7 +26,7 @@ function Button (actionObject, action, x, y, width, height, txt, r, g, b, txtSiz
 
     this.setAddText = function(addText) {
         this.addText = addText;
-    }
+    };
     
     this.display = function() {
         stroke(0);
@@ -39,5 +39,5 @@ function Button (actionObject, action, x, y, width, height, txt, r, g, b, txtSiz
             textSize(this.txtSize-3);
             text(this.addText,this.x+5,this.y + 30,this.width,this.height);
         }
-    }
+    };
 }

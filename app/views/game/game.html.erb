@@ -1,6 +1,7 @@
 <script>
   var c_img;
   var n_img;
+  var g_img;
   var nuke;
   var nucleotides;
   var aminoAcids;
@@ -28,13 +29,20 @@
   var virusSound;
   var geneRegulator;
   var geneRegulate;
+  var ameoba;
+  var tutorial;
+  var r;
+  var g;
+  var b;
 
   function preload(){
-    n_img = loadImage('assets/nucleusiguess.png');
+    n_img = loadImage('assets/nucleus.png');
     m_img = loadImage('assets/mitochondrion.png');
     e_img = loadImage('assets/er.png');
     c_img = loadImage('assets/membrane.png');
     g_img = loadImage('assets/golgibody.png');
+    arrow_img = loadImage('assets/arrow1.png');
+    virusImg = loadImage('assets/virus1.png');
     gameOverSound = loadSound('assets/gameOverSound.mp3');
     notifySound = loadSound('assets/Notify.mp3');
     virusSound = loadSound('assets/virus_attack.mp3');
@@ -45,22 +53,16 @@
     gameOverSound.setVolume(1);
     notifySound.setVolume(1);
     virusSound.setVolume(1);
-    atp = new Resource('ATP',300,125,125,0,0,100);
+    atp = new ATP();
     nucleotides = new Resource('NUCLEOTIDES',100,255,0,0,250, 100);
     aminoAcids = new Resource('AMINO-ACIDS',200,0,255,0,250, 100);
-    glucose = new Resource('GLUCOSE',0,0,0,255,250);
+    glucose = new Resource('GLUCOSE',0,0,0,255,250, 100);
     mito = new Mitochondrion(m_img,width/3,height/4,((m_img.width)/2),[m_button]);
-    er = new Organellee('Endoplasmic Reticulum',e_img,width/2+n_img.width-10,height/2-20);
     notifier = new Notifier();
     invaderVirae = new InvaderVirae();
     radiation = new Radiation();
-    tasks = [radiation];
-    tasksLength = tasks.length;
-    for(var i=0;i<tasksLength*2;i++){
-      noTask = new NoTask();
-      tasks.push(noTask);
-    }
-    taskManager = new TaskManager(tasks);
+    ameoba = new Level('Ameoba',[invaderVirae,radiation]);
+    taskManager = new TaskManager(ameoba.getTasks());
     dice = function(){
       invaderVirae.destroy(1);
     };
@@ -68,15 +70,20 @@
       radiation.fix()
     };
     dicer = new Protein(10,10,dice,'Create Dicer Enzymes',width-290,height-70);
-    geneRegulator = new Protein(60,60,geneRegulate,'Create Gene Regulators',width-140,height-70);
+    geneRegulator = new Protein(20,20,geneRegulate,'Create Gene Regulators',width-140,height-70);
     nuke = new Nucleus(n_img,width/2,height/2,[dicer,geneRegulator]);
     golgiBody = new GolgiBody(g_img,width/2,height/4);
     this.gameOverMessage = '';
+    tutorial = new Tutorial();
+    r = 130;
+    g = 130;
+    b = 130;
+    tutorial.getIntroduction()
   }
 
   function draw(){
-    background(130);
-
+    background(r,g,b);
+    //display objects in else
     if (this.gameOver) {
       stroke(0);
       fill(128);
@@ -89,18 +96,28 @@
       text(Math.round(taskManager.timeAlive/60)+' seconds alive',0,300);
       text(this.gameOverMessage , 0, 450);
     } else {
+      ameoba.display();
       image(c_img,250,75);
       nuke.display();
       atp.display();
+
+
       glucose.display();
       aminoAcids.display();
       nucleotides.display();
       mito.display();
-      er.display();
+
       notifier.display();
       golgiBody.display();
       taskManager.play();
-      if (taskManager.isTaskFailed()) {
+      tutorial.display();
+
+      if (taskManager.isNotPaused()) {
+        atp.ticker();
+        golgiBody.ticker();
+      }
+
+      if (taskManager.isTaskFailed() || atp.showQuantity() == 0) {
         this.gameOver = true;
         gameOverSound.play();
         httpPost('/score','json',{score: Math.round(taskManager.timeAlive/60), authenticity_token: "<%= form_authenticity_token %>"}, function(res) {
@@ -116,24 +133,27 @@
     mito.mouseMoved();
     golgiBody.mouseMoved();
     nuke.mouseMoved();
-    er.mouseMoved();
+
   }
 
   function mousePressed(){
-    mito.mousePressed();
-    if(mito.menuOpen()) {
-      nuke.closeMenu();
-      golgiBody.closeMenu();
+    if (taskManager.isNotPaused()) {
+      mito.mousePressed();
+      if (mito.menuOpen()) {
+        nuke.closeMenu();
+        golgiBody.closeMenu();
+      }
+      nuke.mousePressed();
+      if (nuke.menuOpen()) {
+        mito.closeMenu();
+        golgiBody.closeMenu();
+      }
+      golgiBody.mousePressed();
+      if (golgiBody.menuOpen()) {
+        mito.closeMenu();
+        nuke.closeMenu();
+      }
     }
-    nuke.mousePressed();
-    if(nuke.menuOpen()) {
-      mito.closeMenu();
-      golgiBody.closeMenu();
-    }
-    golgiBody.mousePressed();
-    if(golgiBody.menuOpen()) {
-      mito.closeMenu();
-      nuke.closeMenu();
-    }
+    tutorial.mousePressed(mouseX,mouseY)
   }
 </script>

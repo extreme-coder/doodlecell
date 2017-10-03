@@ -8,6 +8,9 @@ function NoTask(){
     this.play = function() {
         //No-op
     };
+    this.display = function() {
+        //No-op
+    };
 
     this.isComplete = function() {
         this.counter ++;
