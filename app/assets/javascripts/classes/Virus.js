@@ -30,7 +30,7 @@ function InvaderVirae(){
         rect(width-110,10,100,50);
         fill(0);
         textSize(12);
-        text(this.amount+'/'+100,width-100,50);
+        text(this.amount+'/'+200,width-100,50);
         text('Virus',width-100,20,50,50);
         for(var i=0; i<this.virusPositions.length; i++){
             image(virusImg, this.virusPositions[i].x, this.virusPositions[i].y);
