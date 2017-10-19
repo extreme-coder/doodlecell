@@ -25,7 +25,7 @@ function Tutorial(){
     this.closeButton3 = new Button(this, 'hide', width/2-30 + 70, height/2+15 +40, 60 , 40, '  SKIP  ',90, 180, 90, 16);
     this.introduction2 = new Popup("Here you can keep track of your resources. ATP is used for energy, glucose is burned to make ATP, and amino acids and and nucleotides are used in the creation of proteins. Make sure you have enough of these resources at all times.",500,10, this.closeButton3, this.nextButton2, 375, 225, arrow_img);
 
-    this.introduction3 = new Popup("This is the notifications bar. It will tell you what's going on in the game. When you here a 'ding' sound, check this bar to see what happened.",240,190,this.closeButton, null, 300, 200, arrow_img);
+    this.introduction3 = new Popup("This is the notifications bar. It will tell you what's going on in the game. When you hear a 'ding' sound, check this bar to see what happened.",240,190,this.closeButton, null, 300, 200, arrow_img);
 
     this.showingPopup = null;
 

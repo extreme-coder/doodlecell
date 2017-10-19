@@ -66,7 +66,7 @@ function GolgiBody(img_path,x,y){
             }
         }
 
-        image(this.img, this.x, this.y, this.width, this.height);
+        image(this.img, this.x, this.y);
         if (this.menuOpen()){
             fill(255);
             stroke(0);

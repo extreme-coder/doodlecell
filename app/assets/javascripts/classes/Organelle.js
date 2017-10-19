@@ -5,8 +5,7 @@
 function Organellee(name, img, x, y){
     this.name = name;
     this.img = img;
-    this.width = img.width;
-    this.height = img.height;
+
     this.x = x;
     this.y = y;
     this.origX = x;
@@ -27,8 +26,8 @@ function Organellee(name, img, x, y){
     };
 
     this.isInside = function(x, y) {
-        x2 = this.x + this.width;
-        y2 = this.y + this.height;
+        x2 = this.x + this.img.width;
+        y2 = this.y + this.img.height;
         if (x  >this.x && x<x2 && y > this.y && y < y2) {
             return true;
         }
@@ -63,7 +62,7 @@ function Organellee(name, img, x, y){
             }
         }
 
-        image(this.img, this.x, this.y, this.width, this.height);
+        image(this.img, this.x, this.y);
         if (this.menuOpen()){
             fill(255);
             stroke(0);
@@ -80,9 +79,9 @@ function Organellee(name, img, x, y){
         }
     };
     this.getCenterX = function(){
-        return this.x+(this.width/2)
+        return this.x+(this.img.width/2)
     };
     this.getCenterY = function(){
-        return this.y+(this.height/2)
+        return this.y+(this.img.height/2)
     }
 }
