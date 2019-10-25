@@ -7,13 +7,16 @@ function GolgiBody(img_path,x,y){
     this.sugarCounter = 0;
     this.acidCounter = 0;
     this.nucleoCounter = 0;
+    this.fatCounter = 0;
     this.sugarReady = false;
     this.acidReady = false;
     this.nucleoReady = false;
+    this.fatReady = false;
     this.ticker = function() {
         this.sugarCounter++;
         this.acidCounter++;
         this.nucleoCounter++;
+        this.fatCounter++;
         if (this.sugarCounter > 600) {
             this.buttons[0].setAddText("Ready");
             if (!this.sugarReady) {

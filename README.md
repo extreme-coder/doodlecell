@@ -1,2 +1,0 @@
-# doodlecell
-Doodle Cell

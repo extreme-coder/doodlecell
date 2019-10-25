@@ -1,3 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doodle Cell</title>
+    <script src="./p5.min.js" ></script>
+    <script src="./p5.sound.min.js" ></script>
+    <script src="./classes/Resource.js" ></script>
+    <script src="./classes/Virus.js" ></script>
+    <script src="./classes/Tutorial.js" ></script>
+    <script src="./classes/GolgiBody.js" ></script>
+    <script src="./classes/Level.js" ></script>
+    <script src="./classes/Mitochondrion.js" ></script>
+    <script src="./classes/NoTask.js" ></script>
+    <script src="./classes/Notifier.js" ></script>
+    <script src="./classes/Organelle.js" ></script>
+    <script src="./classes/Popup.js" ></script>
+    <script src="./classes/Protein.js" ></script>
+    <script src="./classes/Radiation.js" ></script>
+    <script src="./classes/Resource.js" ></script>
+    <script src="./classes/Task.js" ></script>
+    <script src="./classes/TaskManager.js" ></script>
+    <script src="./classes/ATP.js" ></script>
+    <script src="./classes/Button.js" ></script>
+    <script src="./classes/Nucleus.js" ></script>
+    
+   
+  </head>
+  <body>
+    <header>
+     
+    </header>
+    <main role="main">
+      
+    </main>
+  </body>
+
 <script>
   var c_img;
   var n_img;
@@ -57,6 +95,7 @@
     nucleotides = new Resource('NUCLEOTIDES',100,255,0,0,250, 100);
     aminoAcids = new Resource('AMINO-ACIDS',200,0,255,0,250, 100);
     glucose = new Resource('GLUCOSE',0,0,0,255,250, 100);
+    fat = new Resource('FATTY ACIDS',300,255,197,147,250,100);
     mito = new Mitochondrion(m_img,width/3,height/4,((m_img.width)/2),[m_button]);
     notifier = new Notifier();
     invaderVirae = new InvaderVirae();
